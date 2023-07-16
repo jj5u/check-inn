@@ -29,7 +29,7 @@ const roomsJson = {
       checkinTitle: "출석체크",
       appName: "모니모",
       checkinLink:
-        "http://m.okcashbag.com/g/p/life/event/attend/tocbAttendMain.mocb?mission_id=85255&event_id=85255&mission_id=85255&utm_source=copylink&utm_medium=social&utm_campaign=mission_85255",
+        "https://apps.apple.com/kr/app/monimo-%EB%AA%A8%EB%8B%88%EB%AA%A8-%EC%82%BC%EC%84%B1%EA%B8%88%EC%9C%B5%EB%84%A4%ED%8A%B8%EC%9B%8D%EC%8A%A4/id379577046",
       registerLink:
         "https://www.monimo.com/w/applink/WPFMAL0104M0?cmpId=M231089157&frndInvtCd=GM19HO6&invateDate=20230715",
       invitationCode: "GM19HO6",
@@ -47,11 +47,21 @@ const roomsJson = {
     },
     {
       index: "5",
-      checkinImgSrc: "https://res.heraldm.com/content/image/2022/04/14/20220414000575_0.jpg",
+      checkinImgSrc: "https://paybooc.co.kr/pc/front/inc/images/renew/event/2023/icon_error_01.png",
       minReward: "x 머니박스",
       checkinTitle: "출석체크",
       appName: "페이북",
       checkinLink: "https://paybooc.co.kr/app/paybooc/REventAtndDetail.do",
+      registerLink: "",
+      invitationCode: "",
+    },
+    {
+      index: "6",
+      checkinImgSrc: "",
+      minReward: "x 1",
+      checkinTitle: "행운복권",
+      appName: "토스",
+      checkinLink: "https://toss.im/_m/byx7tht",
       registerLink: "",
       invitationCode: "",
     },
