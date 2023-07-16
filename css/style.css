@@ -1,0 +1,324 @@
+@import "reset.css";
+:root {
+  --primary-100: #86efac;
+  --primary-200: #f0fdf5;
+  --primary-300: #19725d;
+  --accent-100: #f5be0b;
+  --accent-200: #fef1c7;
+  --text-100: #292524;
+  --text-200: #78716c;
+  --bg-100: #fafaf9;
+  --bg-200: #f5f5f4;
+  --bg-300: #e0e2e5;
+}
+/* pixel border  */
+:root {
+  --pixel-bg: #fef1c7;
+  /* ↑ Inner background color */
+
+  --pixel-border: #f5be0b;
+  /* ↑ Inner border color */
+
+  --pixel-bg: #fef1c7;
+  /* ↑ Middle border color */
+
+  --pixel-border: #f5be0b;
+  /* ↑ Outer border color */
+
+  --pixel: 0.125rem;
+  /* ↑ Pixel size */
+}
+.visited {
+  --pixel-bg: var(--bg-100);
+  /* ↑ Inner background color */
+
+  --pixel-border: var(--text-200);
+  /* ↑ Inner border color */
+
+  --pixel: 0.125rem;
+  /* ↑ Pixel size */
+}
+* {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  color: var(--text-100);
+}
+
+body {
+  height: 100vh;
+}
+h1 {
+  font-weight: 400;
+  font-family: "VT323", monospace;
+  font-size: 3rem;
+  text-align: center;
+}
+
+h2 {
+  text-align: center;
+}
+
+nav {
+  max-width: 768px;
+  display: grid;
+  margin: 12px auto;
+}
+
+nav .kind {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+nav .kind .kind-name {
+  display: flex;
+}
+nav .kind .kind-name label {
+  cursor: pointer;
+}
+nav .kind .kind-name label input[type="radio"] {
+  display: none;
+}
+nav .kind .kind-name label input[type="radio"] ~ span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--text-200);
+  background-color: var(--bg-200);
+  color: var(--text-200);
+  border-radius: 1rem;
+}
+nav .kind .kind-name label:hover input[type="radio"] ~ span {
+  border: 2px solid #df0101;
+}
+.clock {
+  padding: 1rem;
+  text-align: center;
+  font-family: "VT323", monospace;
+  font-size: 1.5rem;
+  letter-spacing: 2px;
+}
+main {
+  max-width: 768px;
+  margin: 16px auto;
+  padding: 0 20px;
+  position: relative;
+}
+div.invitation-clicked {
+  position: fixed;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+  justify-content: center;
+  display: none;
+}
+div.invitation-clicked.active {
+  display: inline-flex;
+}
+div.invitation-clicked span {
+  background-color: var(--bg-100);
+  color: var(--text-100);
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+main .rooms {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+}
+main .rooms .room {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  position: relative;
+  overflow-x: hidden;
+}
+main .rooms .room .data-index {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--pixel-border);
+  background-color: var(--bg-100);
+  padding: 0.3rem;
+  width: 20px;
+  height: 20px;
+  border-radius: 1rem;
+  border: 1px solid var(--pixel-border);
+  font-size: 12px;
+  font-weight: 700;
+  position: absolute;
+}
+main .rooms .room .data-checkin-img {
+  border-radius: 1rem;
+  overflow: hidden;
+  margin: 0 auto;
+}
+main .rooms .room .data-checkin-img .no-img {
+  display: flex;
+  width: 150px;
+  min-height: 50px;
+  color: var(--pixel-bg);
+  background-color: var(--pixel-border);
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  word-break: keep-all;
+}
+main .rooms .room .data-checkin-img img {
+  object-fit: cover;
+  object-position: 50% 50%;
+  max-width: 150px;
+  max-height: 100%;
+}
+main .rooms .room .data-checkin-info {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+  margin-bottom: auto;
+}
+main .rooms .room .data-checkin-info * {
+  color: var(--pixel-border);
+}
+main .rooms .room .data-checkin-info .data-app-name {
+  font-weight: 400;
+  font-family: "VT323", "Noto Sans KR";
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--pixel-border);
+  background-color: var(--pixel-bg);
+  color: var(--pixel-border);
+  font-size: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+}
+main .rooms .room .data-checkin-info .data-checkin-title {
+  font-size: 1.4rem;
+  letter-spacing: -1px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-break: keep-all;
+}
+main .rooms .room .data-checkin-info .rewards .data-min-reward {
+  font-weight: 400;
+  font-family: "VT323", monospace;
+  font-size: 1.2rem;
+  border-radius: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+main .rooms .room .checkin-btn {
+  margin-top: auto;
+}
+main .rooms .room .link-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+main .rooms .room .link-btn * {
+  color: var(--pixel-border);
+}
+main .rooms .room .link-btn a {
+  color: var(--pixel-border);
+  text-decoration: none;
+}
+main .rooms .room .link-btn .register-btn a:visited {
+  color: var(--pixel-border);
+  text-decoration: none;
+}
+main .rooms .room .checkin-btn a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--pixel-border);
+  color: #fff;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+main .rooms .room .register-btn {
+  margin: 0.5rem 0;
+  text-align: center;
+}
+main .rooms .room .invitation-code {
+  text-align: center;
+  cursor: pointer;
+}
+main .rooms .room .invitation-code span {
+  padding: 0.2rem;
+  background-color: var(--pixel-border);
+  color: var(--pixel-bg);
+  border-radius: 1rem;
+}
+footer {
+  min-height: 100px;
+}
+.pixel-border {
+  background: var(--pixel-bg);
+  box-shadow:
+    
+  /* Inner Background Color */ 0 calc(var(--pixel) * -3) 0 calc(var(--pixel) * -1)
+      var(--pixel-bg),
+    0 calc(var(--pixel) * 3) 0 calc(var(--pixel) * -1) var(--pixel-bg),
+    0 calc(var(--pixel) * -6) 0 calc(var(--pixel) * -2) var(--pixel-bg),
+    0 calc(var(--pixel) * 6) 0 calc(var(--pixel) * -2) var(--pixel-bg),
+    0 calc(var(--pixel) * -9) 0 calc(var(--pixel) * -4) var(--pixel-bg),
+    0 calc(var(--pixel) * 9) 0 calc(var(--pixel) * -4) var(--pixel-bg),
+    0 calc(var(--pixel) * -12) 0 calc(var(--pixel) * -6) var(--pixel-bg),
+    0 calc(var(--pixel) * 12) 0 calc(var(--pixel) * -6) var(--pixel-bg),
+    /* Pixel Border Layer 1 */ calc(var(--pixel) * -1) 0 0 0 var(--pixel-border),
+    var(--pixel) 0 0 0 var(--pixel-border), 0 calc(var(--pixel) * -2) 0 0 var(--pixel-border),
+    0 calc(var(--pixel) * 2) 0 0 var(--pixel-border),
+    0 calc(var(--pixel) * -5) 0 calc(var(--pixel) * -1) var(--pixel-border),
+    0 calc(var(--pixel) * 5) 0 calc(var(--pixel) * -1) var(--pixel-border),
+    0 calc(var(--pixel) * -7) 0 calc(var(--pixel) * -2) var(--pixel-border),
+    0 calc(var(--pixel) * 7) 0 calc(var(--pixel) * -2) var(--pixel-border),
+    0 calc(var(--pixel) * -10) 0 calc(var(--pixel) * -4) var(--pixel-border),
+    0 calc(var(--pixel) * 10) 0 calc(var(--pixel) * -4) var(--pixel-border),
+    0 calc(var(--pixel) * -13) 0 calc(var(--pixel) * -6) var(--pixel-border),
+    0 calc(var(--pixel) * 13) 0 calc(var(--pixel) * -6) var(--pixel-border),
+    /* Pixel Border Layer 2 */ calc(var(--pixel) * -2) 0 0 0 var(--pixel-bg),
+    calc(var(--pixel) * 2) 0 0 0 var(--pixel-bg),
+    0 calc(var(--pixel) * -1) 0 var(--pixel) var(--pixel-bg),
+    0 var(--pixel) 0 var(--pixel) var(--pixel-bg), 0 calc(var(--pixel) * -4) 0 0 var(--pixel-bg),
+    0 calc(var(--pixel) * 4) 0 0 var(--pixel-bg),
+    0 calc(var(--pixel) * -6) 0 calc(var(--pixel) * -1) var(--pixel-bg),
+    0 calc(var(--pixel) * 6) 0 calc(var(--pixel) * -1) var(--pixel-bg),
+    0 calc(var(--pixel) * -8) 0 calc(var(--pixel) * -2) var(--pixel-bg),
+    0 calc(var(--pixel) * 8) 0 calc(var(--pixel) * -2) var(--pixel-bg),
+    0 calc(var(--pixel) * -11) 0 calc(var(--pixel) * -4) var(--pixel-bg),
+    0 calc(var(--pixel) * 11) 0 calc(var(--pixel) * -4) var(--pixel-bg),
+    0 calc(var(--pixel) * -14) 0 calc(var(--pixel) * -6) var(--pixel-bg),
+    0 calc(var(--pixel) * 14) 0 calc(var(--pixel) * -6) var(--pixel-bg),
+    /* Border Layer 3: --pixel-border */ calc(var(--pixel) * -3) 0 0 0 var(--pixel-border),
+    calc(var(--pixel) * 3) 0 0 0 var(--pixel-border),
+    0 0 0 calc(var(--pixel) * 2) var(--pixel-border),
+    0 calc(var(--pixel) * -3) 0 var(--pixel) var(--pixel-border),
+    0 calc(var(--pixel) * 3) 0 var(--pixel) var(--pixel-border),
+    0 calc(var(--pixel) * -5) 0 0 var(--pixel-border),
+    0 calc(var(--pixel) * 5) 0 0 var(--pixel-border),
+    0 calc(var(--pixel) * -7) 0 calc(var(--pixel) * -1) var(--pixel-border),
+    0 calc(var(--pixel) * 7) 0 calc(var(--pixel) * -1) var(--pixel-border),
+    0 calc(var(--pixel) * -9) 0 calc(var(--pixel) * -2) var(--pixel-border),
+    0 calc(var(--pixel) * 9) 0 calc(var(--pixel) * -2) var(--pixel-border),
+    0 calc(var(--pixel) * -12) 0 calc(var(--pixel) * -4) var(--pixel-border),
+    0 calc(var(--pixel) * 12) 0 calc(var(--pixel) * -4) var(--pixel-border),
+    0 calc(var(--pixel) * -15) 0 calc(var(--pixel) * -6) var(--pixel-border),
+    0 calc(var(--pixel) * 15) 0 calc(var(--pixel) * -6) var(--pixel-border);
+}
+
+@media screen and (min-width: 768px) {
+  h1 {
+    font-size: 4rem;
+  }
+  main .rooms {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
