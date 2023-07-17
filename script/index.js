@@ -162,7 +162,7 @@ checkinBtns.forEach((checkinBtn) => {
 // Function to reset local storage at midnight local time (Seoul)
 function resetLocalStorage() {
   const now = new Date();
-  const timezoneOffset = now.getTimezoneOffset();
+  const timezoneOffset = now.getTimezoneOffset() + 9 * 60; // KST is 9 hours ahead of UTC
   const midnightTime = new Date(
     now.getFullYear(),
     now.getMonth(),
@@ -181,7 +181,12 @@ function resetLocalStorage() {
       }
     });
 
-    // Call the function again to reset at the next midnight
+    // Check if it's a new day (past midnight), then reset local storage
+    if (now < midnightTime) {
+      // It's not a new day yet, so don't reset local storage
+      return;
+    }
+
     resetLocalStorage();
   }, timeUntilMidnight);
 }
