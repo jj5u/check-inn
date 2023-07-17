@@ -165,7 +165,7 @@ main .rooms .room .data-checkin-img .no-img {
   background-color: var(--pixel-border);
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: 2rem 1rem;
   word-break: keep-all;
 }
 main .rooms .room .data-checkin-img img {

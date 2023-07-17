@@ -181,12 +181,7 @@ function resetLocalStorage() {
       }
     });
 
-    // Check if it's a new day (past midnight), then reset local storage
-    if (now < midnightTime) {
-      // It's not a new day yet, so don't reset local storage
-      return;
-    }
-
+    // Call the function again to reset at the next midnight
     resetLocalStorage();
   }, timeUntilMidnight);
 }
