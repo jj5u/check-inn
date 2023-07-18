@@ -25,7 +25,7 @@ const roomsJson = {
     {
       index: "3",
       checkinImgSrc: "https://res.heraldm.com/content/image/2022/04/14/20220414000575_0.jpg",
-      minReward: "x 1",
+      minReward: "x 10",
       checkinTitle: "출석체크",
       appName: "모니모",
       checkinLink:
@@ -65,8 +65,65 @@ const roomsJson = {
       registerLink: "",
       invitationCode: "",
     },
+    {
+      index: "7",
+      checkinImgSrc:
+        " https://paycdn.shinhancard.com/conts/images/common/deeplink_fanguin_200907.png",
+      minReward: "x 2",
+      checkinTitle: "매일 출첵 팡팡!",
+      appName: "신한플레이",
+      checkinLink:
+        "https://pay.shinhancard.com/pay/PAYFM005N/PAYFM005J01.shc?screenId=PAYFM006O01JUL03",
+      registerLink: "",
+      invitationCode: "",
+    },
+    {
+      index: "8",
+      checkinImgSrc:
+        "https://allthatcdn.aws.shinhancard.com/upload_image/event/1883/1883_20_3638.jpg",
+      minReward: "x 2",
+      checkinTitle: "올댓 출석",
+      appName: "신한플레이",
+      checkinLink: "https://allthat.aws.shinhancard.com/Evt00000?evtN=1883",
+      registerLink: "",
+      invitationCode: "",
+    },
   ],
 };
+const colorTheme = [
+  {
+    color: "#d3ebe5",
+    buttonColor: "#4ec0bd",
+  },
+  {
+    color: "#e5ecd7",
+    buttonColor: "#7aaa58",
+  },
+  {
+    color: "#dfeceb",
+    buttonColor: "#67a0ba",
+  },
+  {
+    color: "#d7efdd",
+    buttonColor: "#68c9ca",
+  },
+  {
+    color: "#dff0d6",
+    buttonColor: "#75ae68",
+  },
+  {
+    color: "#eef3d4",
+    buttonColor: "#54b569",
+  },
+  {
+    color: "#e0f0f7",
+    buttonColor: "#7aaad7",
+  },
+  {
+    color: "#d5e8eb",
+    buttonColor: "#6698ae",
+  },
+];
 
 // Function to set the fixed color for .room.visited elements
 function setFixedColorForVisitedRooms() {
@@ -204,42 +261,31 @@ document.addEventListener("DOMContentLoaded", () => {
   setFixedColorForVisitedRooms();
 });
 
-const colorTheme = [
-  {
-    color: "#f7efa2",
-    subColor: "#6fac75",
-  },
-  {
-    color: "#cad3fa",
-    subColor: "#050d9c",
-  },
-  {
-    color: "#f5e4c4",
-    subColor: "#234433",
-  },
-  {
-    color: "#e7efd8",
-    subColor: "#4411fd",
-  },
-  {
-    color: "#f0e9db",
-    subColor: "#f41ade",
-  },
-];
-
 // Function to update the colors of an element
-function updateElementColors(element, color, subColor) {
+function updateElementColors(element, color, buttonColor) {
   element.style.setProperty("--pixel-bg", color);
-  element.style.setProperty("--pixel-border", subColor);
+  element.style.setProperty("--pixel-border", buttonColor);
 }
 
 // Select all the ol.room elements except those with class .visited
 const roomElements = document.querySelectorAll("ol.room:not(.visited)");
 
-// Loop through each room element and assign colors from the colorTheme array
+// Function to shuffle an array using Fisher-Yates algorithm
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+// Shuffle the colorTheme array
+const shuffledColorTheme = shuffleArray(colorTheme);
+
+// Loop through each room element and assign colors from the shuffled colorTheme array
 roomElements.forEach((roomElement, index) => {
-  const { color, subColor } = colorTheme[index % colorTheme.length];
-  updateElementColors(roomElement, color, subColor);
+  const { color, buttonColor } = shuffledColorTheme[index % shuffledColorTheme.length];
+  updateElementColors(roomElement, color, buttonColor);
 });
 
 // Function to handle the click event
