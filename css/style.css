@@ -50,8 +50,9 @@ body {
 h1 {
   font-weight: 400;
   font-family: "VT323", monospace;
-  font-size: 3rem;
+  font-size: 2rem;
   text-align: center;
+  color: #ffc107;
 }
 
 h2 {

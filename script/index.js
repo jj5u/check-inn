@@ -4,7 +4,7 @@ const roomsJson = {
       index: "1",
       checkinImgSrc:
         "https://pocimg-c.okcashbag.com/fw/ocbevt/upload/event/nft/assets/A/202305/ocb-nft-bridge-v2.png",
-      minReward: "x 오또",
+      minReward: "오또",
       checkinTitle: "로드 투 리치",
       appName: "오케이 캐쉬백",
       checkinLink: "https://event.okcashbag.com/gateway/nft/event/nft/events/daily_mission.mocb",
@@ -88,40 +88,54 @@ const roomsJson = {
       registerLink: "",
       invitationCode: "",
     },
+    {
+      index: "9",
+      checkinImgSrc:
+        "https://paycdn.shinhancard.com/conts/images/common/deeplink_fanguin_200907.png",
+      minReward: "x 3",
+      checkinTitle: "신한 퀴즈 팡팡",
+      appName: "신한플레이",
+      checkinLink:
+        "https://pay.shinhancard.com/pay/PAYFM005N/PAYFM005J01.shc?screenId=NATIVE%7CRBFNA8021X01",
+      registerLink: "",
+      invitationCode: "",
+    },
+    {
+      index: "10",
+      checkinImgSrc: "",
+      minReward: "x 1",
+      checkinTitle: "\b매일 주식 받기",
+      appName: "토스",
+      checkinLink: "https://tossinvest.com/_ul/Qu4w",
+      registerLink: "",
+      invitationCode: "",
+    },
+    {
+      index: "11",
+      checkinImgSrc: "",
+      minReward: "x 행운상자",
+      checkinTitle: "매일매일 출첵",
+      appName: "케이뱅크",
+      checkinLink: "https://m.kbanknow.com/k/KAeZN1z",
+      registerLink: "https://m.kbanknow.com/k/KAeZN1z",
+      invitationCode: "",
+    },
+    {
+      index: "12",
+      checkinImgSrc: "",
+      minReward: "x 3",
+      checkinTitle: "매일모으기 출석체크",
+      appName: "카카오페이",
+      checkinLink: "http://kko.to/everyday",
+      registerLink: "",
+      invitationCode: "",
+    },
   ],
 };
 const colorTheme = [
   {
-    color: "#d3ebe5",
-    buttonColor: "#4ec0bd",
-  },
-  {
-    color: "#e5ecd7",
-    buttonColor: "#7aaa58",
-  },
-  {
-    color: "#dfeceb",
-    buttonColor: "#67a0ba",
-  },
-  {
-    color: "#d7efdd",
-    buttonColor: "#68c9ca",
-  },
-  {
-    color: "#dff0d6",
-    buttonColor: "#75ae68",
-  },
-  {
-    color: "#eef3d4",
-    buttonColor: "#54b569",
-  },
-  {
-    color: "#e0f0f7",
-    buttonColor: "#7aaad7",
-  },
-  {
-    color: "#d5e8eb",
-    buttonColor: "#6698ae",
+    color: "#fffbda",
+    buttonColor: "#ffc107",
   },
 ];
 
@@ -215,36 +229,70 @@ const checkinBtns = document.querySelectorAll(".checkin-btn");
 checkinBtns.forEach((checkinBtn) => {
   checkinBtn.addEventListener("click", handleCheckinButtonClick);
 });
-
-// Function to reset local storage at midnight local time (Seoul)
+// Function to save the next reset time in local storage
+function saveResetTime(resetTime) {
+  localStorage.setItem("reset_time", resetTime.getTime());
+}
+// Function to reset local storage
 function resetLocalStorage() {
-  const now = new Date();
-  const timezoneOffset = now.getTimezoneOffset() + 9 * 60; // KST is 9 hours ahead of UTC
-  const midnightTime = new Date(
-    now.getFullYear(),
-    now.getMonth(),
-    now.getDate() + 1,
-    0,
-    -timezoneOffset,
-    0
-  );
-  const timeUntilMidnight = midnightTime - now;
-
-  setTimeout(() => {
-    // Reset local storage
-    Object.keys(localStorage).forEach((key) => {
-      if (key.startsWith("clickedStatus_")) {
-        localStorage.removeItem(key);
-      }
-    });
-
-    // Call the function again to reset at the next midnight
-    resetLocalStorage();
-  }, timeUntilMidnight);
+  Object.keys(localStorage).forEach((key) => {
+    if (key.startsWith("clickedStatus_")) {
+      localStorage.removeItem(key);
+    }
+  });
 }
 
-// Check if it's a new day (past midnight), then reset local storage
-resetLocalStorage();
+// Function to save the next reset time in local storage
+function calculateNextResetTime(hour) {
+  const now = new Date();
+
+  // Step 1: Get the current local time (hour) in the local timezone
+  const currentHours = now.getHours();
+
+  // Step 2: Get the current time difference (UTC offset) between the local timezone and UTC (UTC+0)
+  const currentTimeDifference = now.getTimezoneOffset() / 60; // Get the offset in hours
+
+  // Step 3: Calculate the current local time (hour) in GMT+9 by adding the UTC offset of GMT+9 to the current local time
+  const current0900Hours = (currentHours + currentTimeDifference + 9) % 24;
+
+  // Step 4: Calculate the time difference in hours between GMT+9 and UTC+0
+  const timeDifference = 9;
+
+  // Step 5: Calculate the number of hours remaining until the specified hour in GMT+9 based on the current local time in GMT+9
+  const hoursRemaining = (hour - current0900Hours + 24) % 24;
+
+  // Step 6: Calculate the next reset time by adding the hoursRemaining to the current local time (hour) and set the minutes, seconds, and milliseconds to 0 to get midnight of the next day
+  const nextResetTime = new Date(now);
+  nextResetTime.setHours(now.getHours() + hoursRemaining, 0, 0, 0);
+
+  return nextResetTime;
+}
+
+// Function to check the reset time and perform local storage reset if needed
+function checkResetTime() {
+  const now = new Date();
+  const resetTime = localStorage.getItem("reset_time");
+
+  if (resetTime) {
+    if (now.getTime() >= Number(resetTime)) {
+      resetLocalStorage();
+      const nextMidnight = calculateNextResetTime(0);
+      saveResetTime(nextMidnight);
+    }
+  } else {
+    const nextMidnight = calculateNextResetTime(0);
+    saveResetTime(nextMidnight);
+    resetLocalStorage();
+  }
+
+  // Schedule the next reset at the saved reset_time
+  const nextResetTime = localStorage.getItem("reset_time");
+  const timeUntilReset = Number(nextResetTime) - now.getTime();
+  setTimeout(checkResetTime, timeUntilReset);
+}
+
+// Perform the check on page load
+checkResetTime();
 
 // Check local storage on page load and update room elements accordingly
 document.addEventListener("DOMContentLoaded", () => {
