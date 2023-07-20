@@ -262,8 +262,15 @@ function calculateNextResetTime(hour) {
   const hoursRemaining = (hour - current0900Hours + 24) % 24;
 
   // Step 6: Calculate the next reset time by adding the hoursRemaining to the current local time (hour) and set the minutes, seconds, and milliseconds to 0 to get midnight of the next day
-  const nextResetTime = new Date(now);
-  nextResetTime.setHours(now.getHours() + hoursRemaining, 0, 0, 0);
+   const nextResetTime = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate() + 1,
+    now.getHours() + hoursRemaining,
+    0,
+    0,
+    0
+  );
 
   return nextResetTime;
 }
