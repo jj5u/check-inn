@@ -104,7 +104,7 @@ const roomsJson = {
       index: "10",
       checkinImgSrc: "",
       minReward: "x 1",
-      checkinTitle: "\b매일 주식 받기",
+      checkinTitle: "매일 주식 받기",
       appName: "토스",
       checkinLink: "https://tossinvest.com/_ul/Qu4w",
       registerLink: "",
@@ -229,6 +229,7 @@ const checkinBtns = document.querySelectorAll(".checkin-btn");
 checkinBtns.forEach((checkinBtn) => {
   checkinBtn.addEventListener("click", handleCheckinButtonClick);
 });
+
 // Function to save the next reset time in local storage
 function saveResetTime(resetTime) {
   localStorage.setItem("reset_time", resetTime.getTime());
@@ -262,10 +263,10 @@ function calculateNextResetTime(hour) {
   const hoursRemaining = (hour - current0900Hours + 24) % 24;
 
   // Step 6: Calculate the next reset time by adding the hoursRemaining to the current local time (hour) and set the minutes, seconds, and milliseconds to 0 to get midnight of the next day
-   const nextResetTime = new Date(
+  const nextResetTime = new Date(
     now.getFullYear(),
     now.getMonth(),
-    now.getDate() + 1,
+    now.getDate(),
     now.getHours() + hoursRemaining,
     0,
     0,
@@ -285,6 +286,15 @@ function checkResetTime() {
       resetLocalStorage();
       const nextMidnight = calculateNextResetTime(0);
       saveResetTime(nextMidnight);
+    } else {
+      // Check if the reset_time is twice bigger or even less than the next midnight
+      const nextMidnight = calculateNextResetTime(0);
+      if (
+        Number(resetTime) >= nextMidnight.getTime() + 60000 ||
+        Number(resetTime) <= nextMidnight.getTime() - 60000
+      ) {
+        saveResetTime(nextMidnight);
+      }
     }
   } else {
     const nextMidnight = calculateNextResetTime(0);
@@ -325,21 +335,9 @@ function updateElementColors(element, color, buttonColor) {
 // Select all the ol.room elements except those with class .visited
 const roomElements = document.querySelectorAll("ol.room:not(.visited)");
 
-// Function to shuffle an array using Fisher-Yates algorithm
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
-
-// Shuffle the colorTheme array
-const shuffledColorTheme = shuffleArray(colorTheme);
-
 // Loop through each room element and assign colors from the shuffled colorTheme array
 roomElements.forEach((roomElement, index) => {
-  const { color, buttonColor } = shuffledColorTheme[index % shuffledColorTheme.length];
+  const { color, buttonColor } = colorTheme[0];
   updateElementColors(roomElement, color, buttonColor);
 });
 
